@@ -1,0 +1,60 @@
+import java.util.Scanner;
+class DoublylinkedlistNode {
+    int data;
+    DoublylinkedlistNode next;
+    DoublylinkedlistNode prev;
+    DoublylinkedlistNode(int data) {
+        this.data = data;
+        this.prev = null;
+        this.next = null;
+    }
+}
+public class Doublylinkedlist {
+    public static DoublylinkedlistNode reverse(DoublylinkedlistNode head) {
+        DoublylinkedlistNode current = head;
+        DoublylinkedlistNode newHead = null;
+        while (current != null) {
+            DoublylinkedlistNode temp = current.next;
+            current.next = current.prev;
+            current.prev = temp;
+            newHead = current;
+            current = temp;
+        }
+        return newHead;
+    }
+    public static void printList(DoublylinkedlistNode head) {
+        DoublylinkedlistNode current = head;
+        while (current != null) {
+            System.out.print(current.data + " ");
+            current = current.next;
+        }
+        System.out.println();
+    }
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter no.of test cases: ");
+        int t = scanner.nextInt();
+        while (t-->0) {
+            System.out.print("Enter no.of nodes: ");
+            int n = scanner.nextInt();
+            DoublylinkedlistNode head = null, tail = null;
+            System.out.println("Enter " + n + " elements:");
+            for (int i = 0; i < n; i++) {
+                int data = scanner.nextInt();
+                DoublylinkedlistNode newNode = new DoublylinkedlistNode(data);
+                if (head == null) {
+                    head = newNode;
+                    tail = newNode;
+                } else {
+                    tail.next = newNode;
+                    newNode.prev = tail;
+                    tail = newNode;
+                }
+            }
+            DoublylinkedlistNode reversedHead = reverse(head);
+            System.out.println("Reversed List:");
+            printList(reversedHead);
+        }
+        scanner.close();
+    }
+}
